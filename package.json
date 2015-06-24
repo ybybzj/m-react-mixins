@@ -1,5 +1,5 @@
 {
-  "name": "m-react-mixins",
+  "name": "@zj/m-react-mixins",
   "version": "0.1.0",
   "description": "mixins for m-react",
   "main": "index.js",
@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jackzj",
-  "license": "ISC"
+  "license": "ISC",
+  "publishConfig":{
+    "scope": "@zj",
+    "registry": "http://npm.qtang.net"
+  }
 }
