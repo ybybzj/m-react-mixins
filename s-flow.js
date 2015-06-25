@@ -20,7 +20,7 @@ module.exports = function(sf){
       if(this.__facets) return this.__facets.get();
       return {};
     },
-    componentDidMOunt: function(){
+    componentDidMount: function(){
       if(!this.__facets) return;
       var handler = (function(){
         this.setState(this.__facets.get());
