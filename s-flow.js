@@ -3,25 +3,31 @@ module.exports = function(sf){
   return {
     mixins:[pureRender()],
     getInitialState: function(){
+      this._setupSignals();
+      this._setupFacets();
+      if(this.__facets) return this.__facets.get();
+      return {};
+    },
+    _setupSignals: function(){
       var signals = this.signals;
-      this.__facets = sf.state.store.createFacet({
-        cursors: this.cursors,
-        facets: this.facets
-      }, [this.props]);
-
-      this.cursors = this.__facets.cursors;
-      this.facets = this.__facets.facets;
+      //setup signals
       if(Array.isArray(signals) && signals.length){
         this.signals = signals.reduce(function(m, name){
           m[name] = sf.signal.getEmitter(name);
           return m;
         }, {});
       }
-      if(this.__facets) return this.__facets.get();
-      return {};
     },
-    componentDidMount: function(){
-      if(!this.__facets) return;
+    _setupFacets: function(){
+      //setup facets
+      this.__facets = sf.state.store.createFacet({
+        cursors: this.cursors,
+        facets: this.facets
+      }, [this.props]);
+      this.cursors = this.__facets.cursors;
+      this.facets = this.__facets.facets;
+      
+      //listen to facets' "update" event
       var handler = (function(){
         this.setState(this.__facets.get());
       }).bind(this);
@@ -38,4 +44,4 @@ module.exports = function(sf){
       this.setState(this.__facets.get(), true);
     }
   };
-}
+};
