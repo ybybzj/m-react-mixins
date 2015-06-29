@@ -1,14 +1,18 @@
 var pureRender = require('./pure-render');
-module.exports = function(sf){
+module.exports = function(){
   return {
     mixins:[pureRender()],
+    getInitialProps: function(props){
+      if(props && props.sf && props.sf.$type === '__$sf$__'){
+        props.sf.signal && this._setupSignals(props.sf);
+        props.sf.state  && this._setupFacets(props.sf);
+      }
+    },
     getInitialState: function(){
-      this._setupSignals();
-      this._setupFacets();
       if(this.__facets) return this.__facets.get();
       return {};
     },
-    _setupSignals: function(){
+    _setupSignals: function(sf){
       var signals = this.signals;
       //setup signals
       if(Array.isArray(signals) && signals.length){
@@ -18,7 +22,7 @@ module.exports = function(sf){
         }, {});
       }
     },
-    _setupFacets: function(){
+    _setupFacets: function(sf){
       //setup facets
       this.__facets = sf.state.store.createFacet({
         cursors: this.cursors,
