@@ -1,6 +1,6 @@
 {
   "name": "@zj/m-react-mixins",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "mixins for m-react",
   "main": "index.js",
   "scripts": {
