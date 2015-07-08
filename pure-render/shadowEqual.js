@@ -11,20 +11,24 @@ module.exports = function(objA, objB, checkChildren){
     keysA = _removeItem(keysA, 'children');
     keysB = _removeItem(keysB, 'children');
   }
+ 
+  
   if(keysA.length !== keysB.length){
     return false;
   }
   var bHasOwn = Object.prototype.hasOwnProperty.bind(objB);
-  var key;
-  for(var i = 0, l = keysA.length; i < l; i++){
+  var key, i, l;
+  for(i = 0, l = keysA.length; i < l; i++){
     key = keysA[i];
     if(bHasOwn(keysA[i]) || objA[key] !== objB[key]){
       return false;
     }
   }
   if(checkChildren){
-    if(!Array.isArray(objA.children) || !Array.isArray(objB.children)) return false;
-    return objA.children.length === objB.children.length;
+    if(!Array.isArray(objA.children) || !Array.isArray(objB.children)
+      || objA.children.length !== objB.children.length) {
+      return false;
+    }
   }
   return true;
 };
